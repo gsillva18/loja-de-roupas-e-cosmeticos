@@ -93,6 +93,17 @@ export default function ClienteConta() {
                     </button>
                 </div>
             </form>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+
+                <button onClick={() => console.log("Chamando o login!")} className={style.btnGoogle}>
+                    <img
+                        src="https://developers.google.com/identity/images/g-logo.png"
+                        alt="google-icon"
+                        style={{ width: "20px", marginRight: "10px" }}
+                    />
+                    Continuar com o Google
+                </button>
+            </div>
         </div>
     )
 }

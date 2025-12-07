@@ -11,37 +11,13 @@ export default function ClienteLogin() {
 
     const route = useRouter()
 
-    const { data: session } = useSession();
-
+    //const { data: session } = useSession();
+    /*
     if (session) {
         route.replace("/perfil");
         return null;
     }
-
-    /*
-    const handleLogin = async (e) => {
-        e.preventDefault()
-        try {
-            const response = await fetch('/api/autenticacao/criarconta', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha })
-            })
-
-            if (response.ok) {
-                const data = await response.json()
-                const id = data.id
-                route.push(`/`)
-            } else {
-                const errorData = await response.json()
-                alert(`Erro ao fazer login: ${errorData.error}`)
-            }
-        } catch (error) {
-            console.error('Erro ao fazer login:', error)
-            alert('Erro de conexão com o servidor.')
-        }
-    }
-    */
+*/
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -99,10 +75,16 @@ export default function ClienteLogin() {
                     </button>
                 </div>
             </form>
-            {/* aqui colocamos o botão de login por meio do google e chamamos a função de signIn  */}
-            <button onClick={() => signIn("google")} className={style.btn}>
-                Continuar com o Google
-            </button>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+                <button onClick={() => console.log("Chamando o login!")} className={style.btnGoogle}>
+                    <img
+                        src="https://developers.google.com/identity/images/g-logo.png"
+                        alt="google-icon"
+                        style={{ width: "20px", marginRight: "10px" }}
+                    />
+                    Continuar com o Google
+                </button>
+            </div>
         </div>
     )
 }

@@ -18,59 +18,37 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header className={style.header}>
-
-          <img src="/logo da loja.png" alt="J&G" width={50} height={50} />
-
-          <div className={style.pesquisar}>
-            <input type="text" placeholder="" />
-            <span className={style.imagempesquisa}>
-
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-                <path d="M21 21l-4.3-4.3m1.8-5.2a7 7 0 11-14 0 7 7 0 0114 0z"
-                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </span>
-          </div>
-
-          <div className={style.header1}>
-            <button className={style.iconeBotao} aria-label="Carrinho">
-              <img src="/carrinho.png.png" alt="" width={50} height={30} />
-            </button>
-            <button className={style.iconeBotao} aria-label="Perfil">
-              <img src="/iconperfil.png.png" alt="" width={50} height={30} />
-            </button>
-          </div>
-        </header>
         {children}
         <footer className={style.footer}>
-        <div className={style.rodape}>
-          <div>
-            <p className={style.footerTitle}>FORMAS DE PAGAMENTO</p>
-            <div className={style.footerIcons}>
-              <img src="logopix.png" alt="PIX"/>
+          <div className={style.rodape}>
+            <div>
+              <p className={style.footerTitle}>FORMAS DE PAGAMENTO</p>
+              <div className={style.footerIcons}>
+                <img src="logopix.png" alt="PIX" />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <p className={style.footerTitle}>NÂO ENCONTROU O QUE PROCURAVA?<br />FALE CONOSCO.</p>
-            <div className={style.footerIcons}>
-              <img src="logowhatsapp.png" alt=""/>
-            <p><strong>(83) 987375521</strong></p>
-            <p><strong>(83) 987680837</strong></p>
+            <div>
+              <p className={style.footerTitle}>NÂO ENCONTROU O QUE PROCURAVA?<br />FALE CONOSCO.</p>
+              <div className={style.footerIcons}>
+                <img src="logowhatsapp.png" alt="" />
+                <p><strong>(83) 987375521</strong></p>
+                <p><strong>(83) 987680837</strong></p>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <p className={style.footerTitle}>SIGAM NOSSO INSTAGRAM</p>
-            <div className={style.footerIcons}>
-              <img src="logoinstagram.png" alt="Instagram"/>
-              <span>@jg.modass18</span>
+            <div>
+              <p className={style.footerTitle}>SIGAM NOSSO INSTAGRAM</p>
+              <div className={style.footerIcons}>
+                <img src="logoinstagram.png" alt="Instagram" />
+                <span>@jg.modass18</span>
+              </div>
             </div>
-           </div>
           </div>
         </footer>
       </body>

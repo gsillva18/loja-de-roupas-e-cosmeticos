@@ -16,11 +16,11 @@
 
 :global(html),
 :global(body) {
- margin: 0;
- padding: 0;
- font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
- color: var(--text);
- background: #fff;
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: #fff;
 }
 
 .header {
@@ -127,17 +127,17 @@
 .nav ul {
   gap: 150px;
   flex-wrap: wrap;
-  
+
 }
 
 .nav {
   background: var(--lavender);
-  width: 100%;
-   
+  max-width: 100%;
+
 }
 
 .nav {
-  margin: 0 auto;
+  margin: 0;
   padding: 8px 14px;
   list-style: none;
   display: flex;
@@ -160,9 +160,9 @@
 
 .promocao {
   max-width: 1900px;
-  margin:auto;
+  margin: auto;
   height: 290px;
-  background:#533562;
+  background: #533562;
   color: #fff;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -202,7 +202,7 @@
   width: 200px;
   height: 140px;
   border-radius: 16px;
-  display: flex;  
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -219,30 +219,30 @@
 }
 
 .produtoscards {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
-  }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
 
 
-  /*rodape*/
+/*rodape*/
 .footer {
-    background: #b48fc1;
-    margin-top: 150px;
-    color: #fff;
-  }
+  background: #b48fc1;
+  margin-top: 150px;
+  color: #fff;
+}
 
 .rodape {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    align-items: start;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
 
-.footerTitle{
+.footerTitle {
   font-size: .85rem;
   font-weight: 700;
   margin-bottom: 8px;
@@ -271,7 +271,7 @@
     text-align: center;
   }
 
-.footerIcons {
+  .footerIcons {
     justify-content: center;
   }
 }

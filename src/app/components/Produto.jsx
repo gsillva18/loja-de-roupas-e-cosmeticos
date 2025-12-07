@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import style from './Produto.module.css';
+import style from './styles.module.css';
 
 export default ({ produto = {} }) => {
     const { id, srcImage, alt, nome, preco } = produto;
