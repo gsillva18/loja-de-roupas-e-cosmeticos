@@ -31,34 +31,11 @@ export default function ClientesProdutos() {
 
   const route = useRouter();
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    try {
-      const response = await fetch('/api/autenticacao/criarconta', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ barra, menuSuperior, menuDeCategorias, carrinho, promocao, produtos, pagamento, contato })
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        const id = data.id
-        route.push(`/perfil/${id}`)
-      } else {
-        const errorData = await response.json()
-        alert(`Erro ao fazer compra: ${errorData.error}`)
-      }
-    } catch (error) {
-      console.error('Erro ao fazer compra:', error)
-      alert('Erro de conexão com o servidor.')
-    }
-  }
-
   return (
     <div>
 
-      <BarraNavegacao tela= {"home"} />
-      
+      <BarraNavegacao tela={"home"} />
+
       <section className={style.promocao}>
         <h1>PROMOÇÃO <br></br> DO DIA</h1>
         <section className={style.promocaonome}>

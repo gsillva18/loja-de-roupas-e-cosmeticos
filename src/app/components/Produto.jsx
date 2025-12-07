@@ -5,15 +5,15 @@ export default ({ produto = {} }) => {
     const { id, srcImage, alt, nome, preco } = produto;
 
     return (
-    <div className={style.produto}>
-        <Link href={`/teladoproduto/${id}`}>
-            <img src={srcImage} alt={alt} width={200} />
+        <div className={style.produto}>
+            <Link href={`/produto/${id}`}>
+                <img src={srcImage} alt={alt} width={200} />
             </Link>
             <p>{nome}</p>
             <span>{preco}</span>
-       
+
         </div>
     );
 };
-    
+
 

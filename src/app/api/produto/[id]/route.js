@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import pool from "@/lib/db";
+
 export async function GET(request, { params }) {
   // `params` pode ser um objeto síncrono ou uma Promise em alguns contextos.
   // Detectamos se é "thenable" e aguardamos somente se necessário.
@@ -16,21 +17,29 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
-    client = await pool.connect();
-    const result = await client.query('SELECT * FROM produtos WHERE id = $1', [produtoId]);
+    const result = await client.query(`
+      SELECT DISTINCT ON (p.id_produto)
+        p.id_produto AS id,
+        p.nome,
+        p.preco,
+        p.promocao,
+        p.caracteristicas,
+        COALESCE(pi.url_img, '') AS imagem
+      FROM produto p
+      LEFT JOIN produto_imagem pi
+        ON p.id_produto = pi.id_produto
+      WHERE p.id_produto = $1
+      ORDER BY p.id_produto, pi.id_imagem ASC;
+    `, [produtoId]);
+
     const produto = result.rows[0];
 
     if (!produto) {
-      console.log('Produto não encontrado para o ID:', produtoId);
       return NextResponse.json({ error: "Produto não encontrado" }, { status: 404 });
     }
 
-    if (produto.tipo === 'perfume') {
-      delete produto.cores;
-      delete produto.tamanhos;
-    }
-
     return NextResponse.json(produto);
+
   } catch (error) {
     console.error('Erro ao consultar o banco de dados ou outro erro:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

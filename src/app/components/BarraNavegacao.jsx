@@ -41,7 +41,7 @@ export default function BarraNavegacao(props) {
             <nav className={style.nav}>
                 <ul>
                     <li><a className={style.active} href="#">Início</a></li>
-                    <li><a href="#">Roupas Femininas</a></li>
+                    <li><a href="/">Roupas Femininas</a></li>
                     <li><a href="#">Infantil</a></li>
                     <li><a href="#">Roupas Masculinas</a></li>
                     <li><a href="#">Cosméticos</a></li>
