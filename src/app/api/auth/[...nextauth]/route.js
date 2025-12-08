@@ -6,9 +6,12 @@ import pool from "@/lib/db";
 
 
 async function getUserByEmail(email) {
+    console.log("Fiz a busca do user!")
     const client = await pool.connect();
     const res = await client.query(
-        "SELECT id, nome, email, senha, role FROM cadastro WHERE email = $1",
+        `SELECT id_consumidor AS id, nome, email, senha, role
+         FROM consumidor 
+         WHERE email = $1`,
         [email]
     );
     client.release();

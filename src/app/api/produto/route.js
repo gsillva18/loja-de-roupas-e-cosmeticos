@@ -8,7 +8,6 @@ export async function GET(request) {
     try {
         const client = await pool.connect();
 
-        // Se for "all", não filtramos
         let query = `
       SELECT DISTINCT ON (p.id_produto)
         p.id_produto AS id,
@@ -52,6 +51,70 @@ export async function GET(request) {
         console.error("Erro ao buscar produtos:", error);
         return NextResponse.json(
             { error: "Erro ao listar produtos", details: error.message },
+            { status: 500 }
+        );
+    }
+}
+
+export async function POST(request) {
+    try {
+        const body = await request.json();
+        const {
+            id_categoria,
+            nome,
+            preco,
+            estoque,
+            caracteristicas,
+            promocao,
+            imagens
+        } = body;
+
+        const client = await pool.connect();
+        await client.query("BEGIN");
+
+        const insertProduto = `
+      INSERT INTO produto
+      (id_categoria, nome, preco, estoque, caracteristicas, promocao)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id_produto
+    `;
+
+        const result = await client.query(insertProduto, [
+            id_categoria,
+            nome,
+            preco,
+            estoque,
+            caracteristicas,
+            promocao
+        ]);
+
+        const id_produto = result.rows[0].id_produto;
+
+        if (imagens && imagens.length > 0) {
+            const sqlImg = `
+        INSERT INTO produto_imagem (id_produto, url_img)
+        VALUES ($1, $2)
+      `;
+            for (const url of imagens) {
+                await client.query(sqlImg, [id_produto, url]);
+            }
+        }
+
+        await client.query("COMMIT");
+        client.release();
+
+        return NextResponse.json(
+            {
+                success: true,
+                message: "Produto salvo!",
+                id_produto
+            },
+            { status: 201 }
+        );
+
+    } catch (error) {
+        return NextResponse.json(
+            { error: "Erro ao salvar produto", details: error.message },
             { status: 500 }
         );
     }

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from "next-auth/react";
 import style from './page.module.css'
@@ -11,28 +11,31 @@ export default function ClienteLogin() {
 
     const route = useRouter()
 
-    //const { data: session } = useSession();
-    /*
-    if (session) {
-        route.replace("/perfil");
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            route.replace("/");
+        }
+    }, [status]);
+
+    if (status === "loading") {
+        return <p className={style.loading}>Carregando...</p>;
+    }
+
+    if (status === "authenticated") {
         return null;
     }
-*/
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        try {
-            const res = await signIn("credentials", {
-                redirect: false,
-                email,
-                senha
-            });
-            if (res?.ok) route.push("/");
-            else alert("Email e senha inválidos");
-        } catch (error) {
-            console.error(error)
-            alert('Erro de conexão')
-        }
+        const res = await signIn("credentials", {
+            redirect: false,
+            email,
+            senha
+        });
+        if (res?.ok) route.push("/");
+        else alert("Email e senha inválidos");
     }
 
     return (
@@ -76,7 +79,7 @@ export default function ClienteLogin() {
                 </div>
             </form>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
-                <button onClick={() => console.log("Chamando o login!")} className={style.btnGoogle}>
+                <button onClick={() => signIn("google")} className={style.btnGoogle}>
                     <img
                         src="https://developers.google.com/identity/images/g-logo.png"
                         alt="google-icon"

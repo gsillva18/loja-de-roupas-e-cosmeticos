@@ -1,0 +1,68 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+    background-color: #5d3a72;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.nome {
+    color: #f3dfff;
+}
+
+.cardUsuario {
+    background-color: #f8f5fa;
+    border-radius: 12px;
+    padding: 30px;
+    font-size: 20px;
+    line-height: 1.8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cardUsuario p {
+    margin: 12px 0;
+    color: #333;
+}
+
+.loading {
+    text-align: center;
+    font-size: 24px;
+    color: #5d3a72;
+    margin-top: 50px;
+}
+
+.btnSair {
+    width: 100%;
+    max-width: 450px;
+    margin: 40px auto 0 auto;
+    display: block;
+
+    background-color: transparent;
+    border: 2px solid #d4cfe2;
+    /* contorno roxo clarinho */
+    color: #5d3a72;
+    /* roxo */
+    font-size: 20px;
+    font-weight: 600;
+
+    padding: 12px;
+    border-radius: 50px;
+
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+
+.btnSair:hover {
+    background-color: #e7dbf5;
+    border-color: #5d3a72;
+}

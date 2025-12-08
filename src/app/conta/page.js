@@ -1,7 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import style from './page.module.css'
+import { signIn, useSession } from "next-auth/react";
 
 
 
@@ -12,6 +13,23 @@ export default function ClienteConta() {
     const [senha, setSenha] = useState('')
 
     const route = useRouter()
+
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            route.replace("/");
+        }
+    }, [status]);
+
+    if (status === "loading") {
+        return <p className={style.loading}>Carregando...</p>;
+    }
+
+    if (status === "authenticated") {
+        return null;
+    }
+
 
     const handleCriarConta = async (e) => {
         e.preventDefault()
@@ -25,7 +43,7 @@ export default function ClienteConta() {
             if (response.ok) {
                 const data = await response.json()
                 const id = data.id
-                route.push(`/`)
+                route.push(`/login`)
             } else {
                 const errorData = await response.json()
                 alert(`Erro ao fazer login: ${errorData.error}`)
@@ -95,7 +113,7 @@ export default function ClienteConta() {
             </form>
             <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
 
-                <button onClick={() => console.log("Chamando o login!")} className={style.btnGoogle}>
+                <button onClick={() => signIn("google")} className={style.btnGoogle}>
                     <img
                         src="https://developers.google.com/identity/images/g-logo.png"
                         alt="google-icon"

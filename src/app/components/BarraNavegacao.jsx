@@ -2,19 +2,30 @@
 
 import React from "react";
 import style from "./styles.module.css";
+import { useRouter } from 'next/navigation'
 
 export default function BarraNavegacao(props) {
+
+    const route = useRouter()
+
+    const selecionarCategoria = (categoria) => {
+        route.replace(`/?categoria=${categoria}`)
+    }
+
+    const usuarioLogado = props.usuario;
 
     return (
         <div>
             <header className={style.header}>
 
-                <img src="/logo da loja.png" alt="J&G" width={70} height={70} />
+                <img onClick={() => route.replace("/")}
+                    src="/logo da loja.png"
+                    alt="J&G" width={70} height={70} />
+
                 {props.tela === "home" ? (
                     <div className={style.pesquisar}>
                         <input type="text" placeholder="" />
                         <span className={style.imagempesquisa}>
-
                             <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
                                 <path d="M21 21l-4.3-4.3m1.8-5.2a7 7 0 11-14 0 7 7 0 0114 0z"
                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -23,28 +34,54 @@ export default function BarraNavegacao(props) {
                     </div>
                 ) : null}
 
-
                 <div className={style.header1}>
-                    <button className={style.iconeBotao} aria-label="Carrinho">
+                    <button className={style.iconeBotao}>
                         <img src="/carrinho.png.png" alt="" width={50} height={30} />
                     </button>
-                    <button className={style.iconeBotao} aria-label="Perfil">
-                        <img src="/iconperfil.png.png" alt="" width={50} height={30} />
-                    </button>
-                    {/*
-                    <button className={style.iconeBotao} onClick={() => route.replace("/login")}>
-                        Login
-                    </button>
-                    */}
+
+                    {usuarioLogado ? (
+
+                        <button onClick={() => route.replace("/usuario")}
+                            className={style.iconeBotao}>
+                            <img src="/iconperfil.png.png" alt="" width={50} height={30} />
+                        </button>
+                    ) : (
+
+                        <button onClick={() => route.replace("/login")}
+                            className={style.iconeBotao}>
+                            Login
+                        </button>
+                    )}
                 </div>
             </header>
+
             <nav className={style.nav}>
                 <ul>
-                    <li><a className={style.active} href="#">Início</a></li>
-                    <li><a href="/">Roupas Femininas</a></li>
-                    <li><a href="#">Infantil</a></li>
-                    <li><a href="#">Roupas Masculinas</a></li>
-                    <li><a href="#">Cosméticos</a></li>
+                    <li><a onClick={() => route.replace("/")} href="#">Início</a></li>
+
+                    <li>
+                        <a onClick={() => selecionarCategoria("feminina")} href="#">
+                            Roupas Femininas
+                        </a>
+                    </li>
+
+                    <li>
+                        <a onClick={() => selecionarCategoria("infantil")} href="#">
+                            Infantil
+                        </a>
+                    </li>
+
+                    <li>
+                        <a onClick={() => selecionarCategoria("masculina")} href="#">
+                            Roupas Masculinas
+                        </a>
+                    </li>
+
+                    <li>
+                        <a onClick={() => selecionarCategoria("cosmeticos")} href="#">
+                            Cosméticos
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

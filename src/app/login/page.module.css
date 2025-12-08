@@ -111,3 +111,10 @@
 .btnGoogle:active {
     background-color: #f1f3f4;
 }
+
+.loading {
+    text-align: center;
+    font-size: 24px;
+    color: #5d3a72;
+    margin-top: 50px;
+}
