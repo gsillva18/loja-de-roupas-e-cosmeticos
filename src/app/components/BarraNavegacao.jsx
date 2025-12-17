@@ -60,7 +60,7 @@ export default function BarraNavegacao(props) {
                     <li><a onClick={() => route.replace("/")} href="#">Início</a></li>
 
                     <li>
-                        <a onClick={() => selecionarCategoria("feminina")} href="#">
+                        <a onClick={() => selecionarCategoria("Roupas Femininas")} href="#">
                             Roupas Femininas
                         </a>
                     </li>
@@ -72,13 +72,13 @@ export default function BarraNavegacao(props) {
                     </li>
 
                     <li>
-                        <a onClick={() => selecionarCategoria("masculina")} href="#">
+                        <a onClick={() => selecionarCategoria("Roupas Masculinas")} href="#">
                             Roupas Masculinas
                         </a>
                     </li>
 
                     <li>
-                        <a onClick={() => selecionarCategoria("cosmeticos")} href="#">
+                        <a onClick={() => selecionarCategoria("Cosméticos")} href="#">
                             Cosméticos
                         </a>
                     </li>

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import BarraNavegacao from '@/app/components/BarraNavegacao';
 import style from "./page.module.css";
@@ -8,35 +8,58 @@ export default function ProdutoBlusa() {
 
     const route = useRouter()
 
-    // ------- MOCK DO PRODUTO  -------
-    const [produtos, setProdutos] = useState({
-        id: 1,
-        nome: "Blusa Manga Longa",
-        preco: "30,00",
-        tipo: "blusa",
-        imagem_url: "https://images.tcdn.com.br/img/img_prod/746427/blusa_manga_longa_canelada_com_detalhe_de_botao_na_manga_2747_1_e1f97e83e48b23785b238bbeed077af2_20230523113510.jpg",
-        cores: ["#000000ff"],
-        tamanhos: ["P", "M", "G"]
-    })
+    const [produtos, setProdutos] = useState(null)
 
     const { id } = useParams()
-    //const [produtos, setProdutos ] = useState(null)
-    //const [cor, setCor] = useState('')
-    //const [tamanho, setTamanho] = useState('')
-    //const [quantidade, setQuantidade] = useState(1)
-    const [cor, setCor] = useState(produtos.cores[0])
-    const [tamanho, setTamanho] = useState(produtos.tamanhos[0])
-    const [quantidade, setQuantidade] = useState(1)
+    const [cor, setCor] = useState(null)
+    const [tamanho, setTamanho] = useState(null)
+    const [quantidade, setQuantidade] = useState(0)
+
+    useEffect(() => {
+        console.log("Chegou aqui")
+        carregarProduto();
+    }, [id]);
+
+    const carregarProduto = async () => {
+        try {
+            const res = await fetch(`/api/produto/${id}`);
+            if (!res.ok) throw new Error("Erro ao carregar produto");
+
+            const dados = await res.json();
+
+            const caracteristicas =
+                typeof dados.caracteristicas === "string"
+                    ? JSON.parse(dados.caracteristicas)
+                    : (dados.caracteristicas ?? {});
+
+            setProdutos({ ...dados, caracteristicas });
+
+            setCor(caracteristicas?.cores?.[0] ?? null);
+            setTamanho(caracteristicas?.tamanhos?.[0] ?? null);
+            setQuantidade(1);
+
+            console.log(dados)
+            console.log(caracteristicas)
+        } catch (error) {
+            console.error("Erro:", error);
+            setErro("Não foi possível carregar o produto. Tente novamente mais tarde.");
+        }
+    };
 
 
     const adicionarAoCarrinho = async () => {
         alert(`
-      PRODUTO ADICIONADO
-      Nome: ${produtos.nome}
-      Cor: ${cor}
-      Tam: ${tamanho}
-      Quantidade: ${quantidade}
+      Produto adicionado ao carrinho
     `)
+    }
+
+    if (!produtos) {
+        return (
+            <div>
+                <BarraNavegacao tela={"produto"} />
+                <p style={{ padding: 20 }}>Carregando...</p>
+            </div>
+        );
     }
 
     return (
@@ -47,7 +70,7 @@ export default function ProdutoBlusa() {
                     <div className={style.produtoPage}>
 
                         <div className={style.produtoImagem}>
-                            <img src={produtos.imagem_url} alt={produtos.nome} width={200} />
+                            <img src={produtos.imagem} alt={produtos.nome} width={200} />
                         </div>
 
                         <div className={style.produtoInfo}>
@@ -58,7 +81,7 @@ export default function ProdutoBlusa() {
 
                                 <div className={style.campo}>
                                     <span>Cor:</span>
-                                    {produtos.cores.map(c => (
+                                    {(produtos?.caracteristicas?.cores ?? []).map(c => (
                                         <button
                                             key={c}
                                             onClick={() => setCor(c)}
@@ -72,7 +95,7 @@ export default function ProdutoBlusa() {
 
                                 <div className={style.campo}>
                                     <span>Tamanho:</span>
-                                    {produtos.tamanhos.map(t => (
+                                    {(produtos?.caracteristicas?.tamanhos ?? []).map(t => (
                                         <button
                                             key={t}
                                             onClick={() => setTamanho(t)}

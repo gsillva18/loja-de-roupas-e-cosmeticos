@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server'
 import pool from "@/lib/db";
 
 export async function GET(request, { params }) {
-  // `params` pode ser um objeto síncrono ou uma Promise em alguns contextos.
-  // Detectamos se é "thenable" e aguardamos somente se necessário.
+
   const resolvedParams = params && typeof params.then === 'function' ? await params : params;
   const { id } = resolvedParams || {};
 
   let client;
 
   try {
+    client = await pool.connect();
     const produtoId = parseInt(id, 10);
 
     if (isNaN(produtoId)) {
